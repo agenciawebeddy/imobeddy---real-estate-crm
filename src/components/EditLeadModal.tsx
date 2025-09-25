@@ -59,7 +59,7 @@ const EditLeadModal: React.FC<EditLeadModalProps> = ({ isOpen, onClose, onLeadUp
         <button onClick={onClose} className="absolute top-4 right-4 text-brand-light hover:text-white">
           <X size={24} />
         </button>
-        <h2 className="text-2xl font-bold text-white mb-6">Editar Lead</h2>
+        <h2 className="text-2xl font-bold text-brand-primary mb-6">Editar Lead</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-brand-light mb-2">Nome</label>

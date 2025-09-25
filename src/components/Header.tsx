@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Bell, Mail, X } from 'lucide-react';
+import { Search, Bell, Mail, X, Menu } from 'lucide-react';
 import { supabase } from '../integrations/supabase/client';
 import { User } from '@supabase/supabase-js';
 import { Property } from '../types';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  onToggleSidebar?: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
   const [user, setUser] = useState<User | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState<Property[]>([]);
@@ -78,8 +82,16 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="h-24 bg-brand-primary flex items-center justify-between px-8 border-b border-brand-accent/20 flex-shrink-0 relative">
-      <div className="flex-1 relative">
+    <header className="h-16 sm:h-20 lg:h-24 bg-brand-primary flex items-center justify-between px-4 sm:px-6 lg:px-8 border-b border-brand-accent/20 flex-shrink-0 relative">
+      {/* Botão hamburger para mobile */}
+      <button
+        onClick={onToggleSidebar}
+        className="lg:hidden text-brand-light hover:text-brand-primary transition-colors p-2"
+      >
+        <Menu size={24} />
+      </button>
+
+      <div className="flex-1 relative max-w-md mx-4 lg:mx-0">
         <div className="relative">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-light" />
           <input
@@ -87,12 +99,12 @@ const Header: React.FC = () => {
             placeholder="Buscar por imóveis..."
             value={searchTerm}
             onChange={handleInputChange}
-            className="w-full max-w-md bg-brand-secondary border border-brand-accent/50 text-brand-lighter placeholder-brand-light rounded-full py-3 pl-12 pr-12 focus:outline-none focus:ring-2 focus:ring-brand-cta transition-all duration-200"
+            className="w-full bg-brand-secondary border border-brand-accent/50 text-brand-lighter placeholder-brand-light rounded-full py-2 sm:py-3 pl-12 pr-12 focus:outline-none focus:ring-2 focus:ring-brand-cta transition-all duration-200 text-sm sm:text-base"
           />
           {searchTerm && (
             <button
               onClick={clearSearch}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-brand-light hover:text-white"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-brand-light hover:text-brand-primary"
             >
               <X size={16} />
             </button>
@@ -101,7 +113,7 @@ const Header: React.FC = () => {
         
         {/* Resultados da busca */}
         {showResults && (
-          <div className="absolute top-full left-0 mt-2 w-full max-w-md bg-brand-primary border border-brand-accent/50 rounded-lg shadow-lg z-50 max-h-96 overflow-y-auto">
+          <div className="absolute top-full left-0 mt-2 w-full bg-brand-primary border border-brand-accent/50 rounded-lg shadow-lg z-50 max-h-96 overflow-y-auto">
             {isSearching ? (
               <div className="p-4 text-center text-brand-light">
                 Buscando...
@@ -121,7 +133,7 @@ const Header: React.FC = () => {
                         className="w-12 h-12 object-cover rounded-lg"
                       />
                       <div className="flex-1">
-                        <p className="font-semibold text-white text-sm">
+                        <p className="font-semibold text-brand-primary text-sm">
                           {property.name || property.address}
                         </p>
                         {property.name && (
@@ -146,23 +158,23 @@ const Header: React.FC = () => {
         )}
       </div>
       
-      <div className="flex items-center space-x-6">
-        <button className="relative text-brand-light hover:text-white transition-colors">
-          <Mail className="w-6 h-6" />
+      <div className="flex items-center space-x-2 sm:space-x-4 lg:space-x-6">
+        <button className="relative text-brand-light hover:text-brand-primary transition-colors hidden sm:block">
+          <Mail className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
-        <button className="relative text-brand-light hover:text-white transition-colors">
-          <Bell className="w-6 h-6" />
-          <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-xs flex items-center justify-center text-white">3</span>
+        <button className="relative text-brand-light hover:text-brand-primary transition-colors">
+          <Bell className="w-5 h-5 sm:w-6 sm:h-6" />
+          <span className="absolute -top-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 bg-red-500 rounded-full text-xs flex items-center justify-center text-white">3</span>
         </button>
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2 sm:space-x-4">
           <img
             src={`https://ui-avatars.com/api/?name=${user?.email?.charAt(0).toUpperCase() || 'U'}&background=38BDF8&color=fff`}
             alt="User Avatar"
-            className="w-12 h-12 rounded-full border-2 border-brand-cta"
+            className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-full border-2 border-brand-cta"
           />
-          <div>
-            <h3 className="font-semibold text-white">{user?.email || 'Carregando...'}</h3>
-            <p className="text-sm text-brand-light">Corretor(a)</p>
+          <div className="hidden sm:block">
+            <h3 className="font-semibold text-brand-primary text-sm lg:text-base">{user?.email || 'Carregando...'}</h3>
+            <p className="text-xs lg:text-sm text-brand-light">Corretor(a)</p>
           </div>
         </div>
       </div>

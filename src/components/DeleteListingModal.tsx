@@ -17,7 +17,7 @@ const DeleteListingModal: React.FC<DeleteListingModalProps> = ({ isOpen, onClose
         <button onClick={onClose} className="absolute top-4 right-4 text-brand-light hover:text-white"><X size={24} /></button>
         <div className="flex flex-col items-center text-center">
           <div className="bg-red-500/20 p-3 rounded-full mb-4"><AlertTriangle className="w-8 h-8 text-red-400" /></div>
-          <h2 className="text-2xl font-bold text-white mb-2">Excluir Imóvel</h2>
+          <h2 className="text-2xl font-bold text-brand-primary mb-2">Excluir Imóvel</h2>
           <p className="text-brand-light mb-6">Você tem certeza que deseja excluir este imóvel? Esta ação não pode ser desfeita.</p>
           <div className="flex justify-center space-x-4 w-full">
             <button onClick={onClose} className="flex-1 text-brand-light font-bold py-3 px-4 rounded-lg hover:bg-brand-accent">Cancelar</button>

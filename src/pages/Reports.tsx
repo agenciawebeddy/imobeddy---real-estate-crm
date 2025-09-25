@@ -7,7 +7,7 @@ const ReportCard: React.FC<{ title: string; icon: React.ReactNode }> = ({ title,
     <div className="bg-brand-secondary p-4 rounded-full mb-4">
       {icon}
     </div>
-    <h3 className="font-bold text-white text-lg">{title}</h3>
+    <h3 className="font-bold text-brand-primary text-lg">{title}</h3>
     <p className="text-brand-light text-sm mt-1">Clique para gerar o relatório</p>
   </div>
 );
@@ -16,7 +16,7 @@ const Reports: React.FC = () => {
   return (
     <div className="container mx-auto">
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-bold text-white">Relatórios</h2>
+        <h2 className="text-3xl font-bold text-brand-primary">Relatórios</h2>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
         <ReportCard title="Relatório de Vendas" icon={<TrendingUp className="w-8 h-8 text-brand-cta" />} />

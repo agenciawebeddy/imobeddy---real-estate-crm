@@ -69,7 +69,7 @@ const EditListingModal: React.FC<EditListingModalProps> = ({ isOpen, onClose, on
     <div className="fixed inset-0 bg-black/60 z-50 flex justify-center items-center">
       <div className="bg-brand-primary p-8 rounded-2xl border border-brand-accent/20 shadow-lg w-full max-w-lg relative">
         <button onClick={onClose} className="absolute top-4 right-4 text-brand-light hover:text-white"><X size={24} /></button>
-        <h2 className="text-2xl font-bold text-white mb-6">Editar Imóvel</h2>
+        <h2 className="text-2xl font-bold text-brand-primary mb-6">Editar Imóvel</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <ImageUploader onUpload={(url) => setImageUrl(url)} defaultImageUrl={listing?.image_url} />
           <input type="text" placeholder="Nome do Imóvel" value={name} onChange={(e) => setName(e.target.value)} required className="w-full bg-brand-secondary p-3 rounded-lg border border-brand-accent/50" />

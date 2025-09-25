@@ -48,7 +48,7 @@ const Listings: React.FC = () => {
   return (
     <div className="container mx-auto">
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-bold text-white">Listagem de Imóveis</h2>
+        <h2 className="text-3xl font-bold text-brand-primary">Listagem de Imóveis</h2>
         <button onClick={() => setIsAddModalOpen(true)} className="flex items-center justify-center bg-brand-cta text-white font-bold py-3 px-4 rounded-lg hover:bg-sky-400 transition-all duration-200 shadow-lg hover:shadow-sky-500/50">
           <PlusCircle className="w-6 h-6" />
           <span className="ml-3">Novo Imóvel</span>

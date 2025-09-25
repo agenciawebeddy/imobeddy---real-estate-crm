@@ -98,7 +98,7 @@ const CreateSampleDataButton: React.FC = () => {
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center">
           <Database className="w-5 h-5 text-brand-cta mr-2" />
-          <h3 className="text-lg font-semibold text-white">Dados de Exemplo</h3>
+          <h3 className="text-lg font-semibold text-brand-primary">Dados de Exemplo</h3>
         </div>
         <button
           onClick={createSampleData}

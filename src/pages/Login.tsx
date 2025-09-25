@@ -10,7 +10,7 @@ const Login: React.FC = () => {
       <div className="w-full max-w-md p-8 space-y-8 bg-brand-secondary rounded-2xl shadow-lg border border-brand-accent/20">
         <div className="flex flex-col items-center">
           <Building2 className="w-12 h-12 text-brand-cta" />
-          <h1 className="text-4xl font-bold text-white mt-4">ImobEddy</h1>
+          <h1 className="text-4xl font-bold text-brand-primary mt-4">ImobEddy</h1>
           <p className="text-brand-light mt-2">Faça login para acessar seu CRM</p>
         </div>
         <Auth

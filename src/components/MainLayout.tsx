@@ -14,6 +14,7 @@ import AddListingModal from './AddListingModal';
 
 const MainLayout: React.FC = () => {
   const [isAddListingModalOpen, setIsAddListingModalOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const handleOpenAddListingModal = useCallback(() => {
     setIsAddListingModalOpen(true);
@@ -28,12 +29,32 @@ const MainLayout: React.FC = () => {
     // Aqui podemos adicionar lógica adicional se necessário, como refresh de dados
   }, []);
 
+  const toggleSidebar = useCallback(() => {
+    setIsSidebarOpen(!isSidebarOpen);
+  }, [isSidebarOpen]);
+
+  const closeSidebar = useCallback(() => {
+    setIsSidebarOpen(false);
+  }, []);
+
   return (
-    <div className="flex h-screen bg-brand-primary text-brand-lighter font-sans">
-      <Sidebar onOpenAddListingModal={handleOpenAddListingModal} />
+    <div className="flex h-screen bg-brand-primary text-brand-primary font-sans">
+      {/* Overlay para mobile */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={closeSidebar}
+        />
+      )}
+      
+      <Sidebar 
+        onOpenAddListingModal={handleOpenAddListingModal} 
+        isOpen={isSidebarOpen}
+        onClose={closeSidebar}
+      />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <Header />
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-brand-secondary p-8">
+        <Header onToggleSidebar={toggleSidebar} />
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-brand-secondary p-4 sm:p-6 lg:p-8">
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/listings" element={<Listings />} />

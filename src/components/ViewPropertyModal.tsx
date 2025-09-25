@@ -94,13 +94,14 @@ const ViewPropertyModal: React.FC<ViewPropertyModalProps> = ({ isOpen, onClose, 
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 z-50 flex justify-center items-center p-4">
-      <div className="bg-brand-primary rounded-2xl border border-brand-accent/20 shadow-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto relative">
+    <div className="fixed inset-0 bg-black/60 z-50 flex justify-center items-center p-2 sm:p-4">
+      <div className="bg-brand-primary rounded-2xl border border-brand-accent/20 shadow-lg w-full max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto relative">
         <button 
           onClick={onClose} 
-          className="absolute top-4 right-4 z-10 text-brand-light hover:text-white bg-brand-secondary/80 rounded-full p-2 transition-colors"
+          className="absolute top-2 right-2 sm:top-4 sm:right-4 z-10 text-brand-light hover:text-white bg-brand-secondary/80 rounded-full p-2 transition-colors"
         >
-          <X size={24} />
+          <X size={20} className="sm:hidden" />
+          <X size={24} className="hidden sm:block" />
         </button>
         
         {/* Header com imagem */}
@@ -108,125 +109,125 @@ const ViewPropertyModal: React.FC<ViewPropertyModalProps> = ({ isOpen, onClose, 
           <img 
             src={property.image_url} 
             alt={property.name || property.address}
-            className="w-full h-80 object-cover rounded-t-2xl"
+            className="w-full h-48 sm:h-64 lg:h-80 object-cover rounded-t-2xl"
           />
-          <div className="absolute bottom-4 left-4">
+          <div className="absolute bottom-2 left-2 sm:bottom-4 sm:left-4">
             <StatusBadge status={property.status} />
           </div>
         </div>
 
         {/* Conteúdo principal */}
-        <div className="p-8">
+        <div className="p-4 sm:p-6 lg:p-8">
           {/* Título e preço */}
-          <div className="mb-6">
-            <h2 className="text-3xl font-bold text-white mb-2">
+          <div className="mb-4 sm:mb-6">
+            <h2 className="text-2xl sm:text-3xl font-bold text-brand-primary mb-2">
               {property.name || 'Imóvel sem nome'}
             </h2>
             <div className="flex items-center text-brand-light mb-3">
-              <MapPin className="w-5 h-5 mr-2" />
-              <span className="text-lg">{property.address}</span>
+              <MapPin className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+              <span className="text-base sm:text-lg">{property.address}</span>
             </div>
             <div className="flex items-center">
-              <DollarSign className="w-6 h-6 text-brand-cta mr-2" />
-              <span className="text-4xl font-bold text-brand-cta">
-                R$ {property.price.toLocaleString('pt-BR')}
+              <DollarSign className="w-5 h-5 sm:w-6 sm:h-6 text-brand-cta mr-2" />
+              <span className="text-2xl sm:text-4xl font-bold text-brand-cta">
+                R$ {property.price ? property.price.toLocaleString('pt-BR') : 'Não informado'}
               </span>
             </div>
           </div>
 
           {/* Características principais */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-brand-secondary p-6 rounded-xl border border-brand-accent/20">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+            <div className="bg-brand-secondary p-4 sm:p-6 rounded-xl border border-brand-accent/20">
               <div className="flex items-center mb-3">
-                <BedDouble className="w-6 h-6 text-brand-cta mr-3" />
-                <span className="text-brand-light font-medium">Quartos</span>
+                <BedDouble className="w-5 h-5 sm:w-6 sm:h-6 text-brand-cta mr-3" />
+                <span className="text-brand-light font-medium text-sm sm:text-base">Quartos</span>
               </div>
-              <span className="text-3xl font-bold text-white">{property.beds}</span>
+              <span className="text-2xl sm:text-3xl font-bold text-brand-primary">{property.beds}</span>
             </div>
             
-            <div className="bg-brand-secondary p-6 rounded-xl border border-brand-accent/20">
+            <div className="bg-brand-secondary p-4 sm:p-6 rounded-xl border border-brand-accent/20">
               <div className="flex items-center mb-3">
-                <Bath className="w-6 h-6 text-brand-cta mr-3" />
-                <span className="text-brand-light font-medium">Banheiros</span>
+                <Bath className="w-5 h-5 sm:w-6 sm:h-6 text-brand-cta mr-3" />
+                <span className="text-brand-light font-medium text-sm sm:text-base">Banheiros</span>
               </div>
-              <span className="text-3xl font-bold text-white">{property.baths}</span>
+              <span className="text-2xl sm:text-3xl font-bold text-brand-primary">{property.baths}</span>
             </div>
             
-            <div className="bg-brand-secondary p-6 rounded-xl border border-brand-accent/20">
+            <div className="bg-brand-secondary p-4 sm:p-6 rounded-xl border border-brand-accent/20">
               <div className="flex items-center mb-3">
-                <Square className="w-6 h-6 text-brand-cta mr-3" />
-                <span className="text-brand-light font-medium">Área</span>
+                <Square className="w-5 h-5 sm:w-6 sm:h-6 text-brand-cta mr-3" />
+                <span className="text-brand-light font-medium text-sm sm:text-base">Área</span>
               </div>
-              <span className="text-3xl font-bold text-white">{property.sqft} m²</span>
+              <span className="text-2xl sm:text-3xl font-bold text-brand-primary">{property.sqft} m²</span>
             </div>
           </div>
 
           {/* Informações do Cliente Relacionado */}
           {loadingClient ? (
-            <div className="bg-brand-secondary p-6 rounded-xl border border-brand-accent/20 mb-8">
-              <h3 className="text-xl font-bold text-white mb-4">Cliente Relacionado</h3>
+            <div className="bg-brand-secondary p-4 sm:p-6 rounded-xl border border-brand-accent/20 mb-6 sm:mb-8">
+              <h3 className="text-lg sm:text-xl font-bold text-brand-primary mb-4">Cliente Relacionado</h3>
               <p className="text-brand-light">Carregando informações do cliente...</p>
             </div>
           ) : linkedClient ? (
-            <div className="bg-brand-secondary p-6 rounded-xl border border-brand-accent/20 mb-8">
-              <h3 className="text-xl font-bold text-white mb-4 flex items-center">
-                <User className="w-6 h-6 text-brand-cta mr-3" />
+            <div className="bg-brand-secondary p-4 sm:p-6 rounded-xl border border-brand-accent/20 mb-6 sm:mb-8">
+              <h3 className="text-lg sm:text-xl font-bold text-brand-primary mb-4 flex items-center">
+                <User className="w-5 h-5 sm:w-6 sm:h-6 text-brand-cta mr-3" />
                 Cliente Relacionado
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <span className="text-brand-light font-medium">Nome:</span>
-                  <p className="text-white font-semibold">{linkedClient.name}</p>
+                  <span className="text-brand-light font-medium text-sm sm:text-base">Nome:</span>
+                  <p className="text-brand-primary font-semibold text-sm sm:text-base">{linkedClient.name}</p>
                 </div>
                 <div>
-                  <span className="text-brand-light font-medium">Email:</span>
-                  <p className="text-white flex items-center">
+                  <span className="text-brand-light font-medium text-sm sm:text-base">Email:</span>
+                  <p className="text-brand-primary flex items-center text-sm sm:text-base">
                     <Mail className="w-4 h-4 mr-2 text-brand-cta" />
-                    {linkedClient.email}
+                    <span className="truncate">{linkedClient.email}</span>
                   </p>
                 </div>
                 <div>
-                  <span className="text-brand-light font-medium">Telefone:</span>
-                  <p className="text-white flex items-center">
+                  <span className="text-brand-light font-medium text-sm sm:text-base">Telefone:</span>
+                  <p className="text-brand-primary flex items-center text-sm sm:text-base">
                     <Phone className="w-4 h-4 mr-2 text-brand-cta" />
                     {linkedClient.phone}
                   </p>
                 </div>
                 <div>
-                  <span className="text-brand-light font-medium">Último Contato:</span>
-                  <p className="text-white">{formatDate(linkedClient.lastContact)}</p>
+                  <span className="text-brand-light font-medium text-sm sm:text-base">Último Contato:</span>
+                  <p className="text-brand-primary text-sm sm:text-base">{formatDate(linkedClient.lastContact)}</p>
                 </div>
               </div>
             </div>
           ) : (
-            <div className="bg-brand-secondary p-6 rounded-xl border border-brand-accent/20 mb-8">
-              <h3 className="text-xl font-bold text-white mb-4 flex items-center">
-                <User className="w-6 h-6 text-brand-cta mr-3" />
+            <div className="bg-brand-secondary p-4 sm:p-6 rounded-xl border border-brand-accent/20 mb-6 sm:mb-8">
+              <h3 className="text-lg sm:text-xl font-bold text-brand-primary mb-4 flex items-center">
+                <User className="w-5 h-5 sm:w-6 sm:h-6 text-brand-cta mr-3" />
                 Cliente Relacionado
               </h3>
-              <p className="text-brand-light text-center py-4">Nenhum cliente vinculado a este imóvel.</p>
+              <p className="text-brand-light text-center py-4 text-sm sm:text-base">Nenhum cliente vinculado a este imóvel.</p>
             </div>
           )}
 
           {/* Informações adicionais */}
-          <div className="bg-brand-secondary p-6 rounded-xl border border-brand-accent/20">
-            <h3 className="text-xl font-bold text-white mb-4">Informações Adicionais</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-brand-secondary p-4 sm:p-6 rounded-xl border border-brand-accent/20">
+            <h3 className="text-lg sm:text-xl font-bold text-brand-primary mb-4">Informações Adicionais</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <span className="text-brand-light font-medium">ID do Imóvel:</span>
-                <p className="text-white font-mono text-sm">{property.id}</p>
+                <span className="text-brand-light font-medium text-sm sm:text-base">ID do Imóvel:</span>
+                <p className="text-brand-primary font-mono text-xs sm:text-sm break-all">{property.id}</p>
               </div>
               <div>
                 <span className="text-brand-light font-medium">Data de Cadastro:</span>
-                <p className="text-white">{formatDate(property.created_at)}</p>
+                <p className="text-brand-primary">{formatDate(property.created_at)}</p>
               </div>
               <div>
                 <span className="text-brand-light font-medium">Status:</span>
-                <p className="text-white">{property.status}</p>
+                <p className="text-brand-primary">{property.status}</p>
               </div>
               <div>
                 <span className="text-brand-light font-medium">Preço por m²:</span>
-                <p className="text-white font-bold">
+                <p className="text-brand-primary font-bold">
                   R$ {(property.price / property.sqft).toLocaleString('pt-BR', { 
                     minimumFractionDigits: 2, 
                     maximumFractionDigits: 2 

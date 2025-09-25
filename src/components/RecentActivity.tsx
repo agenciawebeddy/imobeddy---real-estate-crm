@@ -13,7 +13,7 @@ const activityData: ActivityLog[] = [
 const RecentActivity: React.FC = () => {
   return (
     <div className="bg-brand-primary p-6 rounded-2xl border border-brand-accent/20 shadow-lg h-full">
-      <h3 className="text-xl font-bold text-white mb-6">Atividade Recente</h3>
+      <h3 className="text-xl font-bold text-brand-primary mb-6">Atividade Recente</h3>
       <ul className="space-y-6">
         {activityData.map((item, index) => (
           <li key={item.id} className="flex items-start">
@@ -25,7 +25,7 @@ const RecentActivity: React.FC = () => {
               <div className="flex items-center space-x-2">
                 <div className="bg-brand-secondary p-2 rounded-full">{item.icon}</div>
                 <div>
-                  <p className="text-sm text-white">
+                  <p className="text-sm text-brand-secondary">
                     <span className="font-bold">{item.user}</span> {item.action}{' '}
                     <span className="font-bold text-brand-cta">{item.target}</span>
                   </p>

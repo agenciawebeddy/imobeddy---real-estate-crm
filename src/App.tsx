@@ -4,6 +4,7 @@ import { supabase } from './integrations/supabase/client';
 import { Session } from '@supabase/supabase-js';
 import MainLayout from './components/MainLayout';
 import Login from './pages/Login';
+import { ThemeProvider } from './contexts/ThemeContext';
 
 const App: React.FC = () => {
   const [session, setSession] = useState<Session | null>(null);
@@ -32,9 +33,11 @@ const App: React.FC = () => {
   }
 
   return (
-    <Router>
-      {!session ? <Login /> : <MainLayout />}
-    </Router>
+    <ThemeProvider>
+      <Router>
+        {!session ? <Login /> : <MainLayout />}
+      </Router>
+    </ThemeProvider>
   );
 };
 

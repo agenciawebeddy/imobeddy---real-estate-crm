@@ -12,11 +12,11 @@ interface DashboardCardProps {
 const DashboardCard: React.FC<DashboardCardProps> = ({ title, value, change, icon, changeType }) => {
   const isIncrease = changeType === 'increase';
   return (
-    <div className="bg-brand-primary p-6 rounded-2xl border border-brand-accent/20 shadow-lg hover:shadow-brand-cta/20 hover:border-brand-cta/50 transition-all duration-300 transform hover:-translate-y-1">
+    <div className="dashboard-card bg-brand-card p-6 rounded-2xl border border-brand-accent/20 shadow-lg hover:shadow-brand-cta/20 hover:border-brand-cta/50 transition-all duration-300 transform hover:-translate-y-1">
       <div className="flex justify-between items-start">
         <div className="flex flex-col">
-          <p className="text-brand-light font-medium">{title}</p>
-          <span className="text-4xl font-bold text-white mt-1">{value}</span>
+          <p className="dashboard-stat-label text-brand-light font-medium">{title}</p>
+          <span className="dashboard-stat text-4xl font-bold text-brand-primary mt-1">{value}</span>
         </div>
         <div className="bg-brand-secondary p-3 rounded-lg">
           {icon}

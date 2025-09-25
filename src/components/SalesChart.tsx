@@ -8,7 +8,7 @@ const CustomTooltip: React.FC<any> = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-brand-primary/80 backdrop-blur-sm p-4 border border-brand-accent/50 rounded-lg shadow-lg">
-        <p className="label font-semibold text-white">{`${label}`}</p>
+        <p className="label font-semibold text-brand-primary">{`${label}`}</p>
         <p className="intro text-brand-cta">{`Vendas : R$${payload[0].value.toLocaleString('pt-BR')}`}</p>
       </div>
     );
@@ -74,7 +74,7 @@ const SalesChart: React.FC = () => {
 
   return (
     <div className="bg-brand-primary p-6 rounded-2xl border border-brand-accent/20 shadow-lg h-96">
-      <h3 className="text-xl font-bold text-white mb-4">Performance de Vendas</h3>
+      <h3 className="text-xl font-bold text-brand-primary mb-4">Performance de Vendas</h3>
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 25 }}>
           <defs>

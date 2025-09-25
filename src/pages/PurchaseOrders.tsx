@@ -2,10 +2,13 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../integrations/supabase/client';
 import { PurchaseOrderWithDetails } from '../types';
 import PurchaseOrdersTable from '../components/PurchaseOrdersTable';
+import ViewOrderDetailsModal from '../components/ViewOrderDetailsModal';
 
 const PurchaseOrders: React.FC = () => {
   const [orders, setOrders] = useState<PurchaseOrderWithDetails[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedOrder, setSelectedOrder] = useState<PurchaseOrderWithDetails | null>(null);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
 
   const fetchPurchaseOrders = useCallback(async () => {
     setLoading(true);
@@ -15,8 +18,8 @@ const PurchaseOrders: React.FC = () => {
         id,
         status,
         created_at,
-        clients ( id, name ),
-        properties ( id, name, address, status )
+        clients ( id, name, email, phone, last_contact ),
+        properties ( id, name, address, status, price, beds, baths, sqft )
       `)
       .order('created_at', { ascending: false });
 
@@ -70,16 +73,37 @@ const PurchaseOrders: React.FC = () => {
     fetchPurchaseOrders();
   };
 
+  const handleViewDetails = (order: PurchaseOrderWithDetails) => {
+    setSelectedOrder(order);
+    setIsDetailsModalOpen(true);
+  };
+
+  const handleCloseDetailsModal = () => {
+    setIsDetailsModalOpen(false);
+    setSelectedOrder(null);
+  };
+
   return (
     <div className="container mx-auto">
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-bold text-white">Ordens de Compra</h2>
+        <h2 className="text-3xl font-bold text-brand-primary">Ordens de Compra</h2>
       </div>
       {loading ? (
         <p className="text-center text-brand-light">Carregando ordens de compra...</p>
       ) : (
-        <PurchaseOrdersTable orders={orders} onStatusChange={handleStatusChange} />
+        <PurchaseOrdersTable 
+          orders={orders} 
+          onStatusChange={handleStatusChange}
+          onViewDetails={handleViewDetails}
+        />
       )}
+
+      {/* Modal */}
+      <ViewOrderDetailsModal
+        isOpen={isDetailsModalOpen}
+        onClose={handleCloseDetailsModal}
+        order={selectedOrder}
+      />
     </div>
   );
 };

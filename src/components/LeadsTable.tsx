@@ -34,7 +34,7 @@ const LeadsTable: React.FC<LeadsTableProps> = ({ leads, onView, onEdit, onDelete
       <div className="space-y-4">
         {leads.map(lead => (
           <div key={lead.id} className="grid grid-cols-6 items-center bg-brand-secondary p-4 rounded-xl hover:bg-brand-accent/50 transition-colors duration-200">
-            <p className="font-semibold text-white">{lead.name}</p>
+            <p className="font-semibold text-brand-primary">{lead.name}</p>
             <p className="text-brand-light">{lead.email}</p>
             <p className="text-brand-light">{lead.phone}</p>
             <p className="text-brand-light">{lead.source}</p>

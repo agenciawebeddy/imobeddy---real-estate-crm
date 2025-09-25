@@ -100,7 +100,7 @@ const LinkPropertyModal: React.FC<LinkPropertyModalProps> = ({ isOpen, onClose, 
     <div className="fixed inset-0 bg-black/60 z-50 flex justify-center items-center">
       <div className="bg-brand-primary p-8 rounded-2xl border border-brand-accent/20 shadow-lg w-full max-w-lg relative">
         <button onClick={onClose} className="absolute top-4 right-4 text-brand-light hover:text-white"><X size={24} /></button>
-        <h2 className="text-2xl font-bold text-white mb-6">Vincular Imóvel a {client?.name}</h2>
+        <h2 className="text-2xl font-bold text-brand-primary mb-6">Vincular Imóvel a {client?.name}</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-brand-light mb-2">Selecione o Imóvel</label>
