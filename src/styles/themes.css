@@ -1,4 +1,5 @@
 /* Tema Escuro (Padrão) */
+:root,
 :root.dark {
   --brand-primary: #0f172a;
   --brand-secondary: #1e293b;
@@ -15,6 +16,8 @@
   --brand-hover: #475569;
   --brand-card-bg: #1e293b;
   --brand-input-bg: #334155;
+  --brand-title: #f8fafc;
+  --brand-subtitle: #cbd5e1;
 }
 
 /* Tema Claro */
@@ -34,6 +37,8 @@
   --brand-hover: #f1f5f9;
   --brand-card-bg: #ffffff;
   --brand-input-bg: #f8fafc;
+  --brand-title: #0f172a;
+  --brand-subtitle: #475569;
 }
 
 /* Classes utilitárias para usar as variáveis CSS */
@@ -43,10 +48,13 @@
 .bg-brand-card { background-color: var(--brand-card-bg); }
 .bg-brand-input { background-color: var(--brand-input-bg); }
 
-.text-brand-primary { color: var(--brand-text); }
-.text-brand-secondary { color: var(--brand-text-secondary); }
+.text-brand-primary { color: var(--brand-title); }
+.text-brand-secondary { color: var(--brand-subtitle); }
 .text-brand-light { color: var(--brand-light); }
 .text-brand-lighter { color: var(--brand-lighter); }
+.text-brand-cta { color: var(--brand-cta); }
+.text-brand-text { color: var(--brand-text); }
+.text-brand-text-secondary { color: var(--brand-text-secondary); }
 
 .border-brand { border-color: var(--brand-border); }
 .border-brand-accent { border-color: var(--brand-accent); }
