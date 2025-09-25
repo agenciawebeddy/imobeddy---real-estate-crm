@@ -8,6 +8,7 @@ import SalesChart from '../components/SalesChart';
 import RecentActivity from '../components/RecentActivity';
 import PropertyListings from '../components/PropertyListings';
 import ViewPropertyModal from '../components/ViewPropertyModal';
+import CreateSampleDataButton from '../components/CreateSampleDataButton';
 
 interface DashboardStats {
   totalSales: number;
@@ -85,6 +86,9 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="container mx-auto">
+      {/* Botão para criar dados de exemplo */}
+      <CreateSampleDataButton />
+      
       {/* Metric Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <DashboardCard

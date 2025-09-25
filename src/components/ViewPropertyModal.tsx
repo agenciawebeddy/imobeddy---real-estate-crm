@@ -1,6 +1,7 @@
-import React from 'react';
-import { X, BedDouble, Bath, Square, MapPin, Calendar, DollarSign } from 'lucide-react';
-import { Property } from '../types';
+import React, { useState, useEffect } from 'react';
+import { X, BedDouble, Bath, Square, MapPin, Calendar, DollarSign, User, Mail, Phone } from 'lucide-react';
+import { Property, Client } from '../types';
+import { supabase } from '../integrations/supabase/client';
 
 interface ViewPropertyModalProps {
   isOpen: boolean;
@@ -19,6 +20,66 @@ const StatusBadge: React.FC<{ status: Property['status'] }> = ({ status }) => {
 };
 
 const ViewPropertyModal: React.FC<ViewPropertyModalProps> = ({ isOpen, onClose, property }) => {
+  const [linkedClient, setLinkedClient] = useState<Client | null>(null);
+  const [loadingClient, setLoadingClient] = useState(false);
+
+  // Buscar cliente relacionado ao imóvel
+  useEffect(() => {
+    const fetchLinkedClient = async () => {
+      if (!property || !isOpen) {
+        setLinkedClient(null);
+        return;
+      }
+
+      setLoadingClient(true);
+      
+      try {
+        // Primeiro, buscar purchase_order relacionada ao imóvel
+        const { data: purchaseOrders, error: orderError } = await supabase
+          .from('purchase_orders')
+          .select('client_id')
+          .eq('property_id', property.id);
+
+        if (orderError) {
+          console.log('Erro ao buscar purchase_orders:', orderError);
+          setLinkedClient(null);
+          return;
+        }
+
+        if (!purchaseOrders || purchaseOrders.length === 0) {
+          console.log('Nenhuma purchase_order encontrada para este imóvel');
+          setLinkedClient(null);
+          return;
+        }
+
+        // Pegar o primeiro cliente vinculado
+        const clientId = purchaseOrders[0].client_id;
+
+        // Buscar os dados completos do cliente
+        const { data: clientData, error: clientError } = await supabase
+          .from('clients')
+          .select('*')
+          .eq('id', clientId)
+          .single();
+
+        if (clientError) {
+          console.log('Erro ao buscar dados do cliente:', clientError);
+          setLinkedClient(null);
+        } else {
+          console.log('Cliente encontrado:', clientData);
+          setLinkedClient(clientData as Client);
+        }
+      } catch (error) {
+        console.error('Erro ao buscar cliente vinculado:', error);
+        setLinkedClient(null);
+      } finally {
+        setLoadingClient(false);
+      }
+    };
+
+    fetchLinkedClient();
+  }, [property, isOpen]);
+
   if (!isOpen || !property) return null;
 
   const formatDate = (dateString?: string) => {
@@ -99,6 +160,53 @@ const ViewPropertyModal: React.FC<ViewPropertyModalProps> = ({ isOpen, onClose, 
               <span className="text-3xl font-bold text-white">{property.sqft} m²</span>
             </div>
           </div>
+
+          {/* Informações do Cliente Relacionado */}
+          {loadingClient ? (
+            <div className="bg-brand-secondary p-6 rounded-xl border border-brand-accent/20 mb-8">
+              <h3 className="text-xl font-bold text-white mb-4">Cliente Relacionado</h3>
+              <p className="text-brand-light">Carregando informações do cliente...</p>
+            </div>
+          ) : linkedClient ? (
+            <div className="bg-brand-secondary p-6 rounded-xl border border-brand-accent/20 mb-8">
+              <h3 className="text-xl font-bold text-white mb-4 flex items-center">
+                <User className="w-6 h-6 text-brand-cta mr-3" />
+                Cliente Relacionado
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <span className="text-brand-light font-medium">Nome:</span>
+                  <p className="text-white font-semibold">{linkedClient.name}</p>
+                </div>
+                <div>
+                  <span className="text-brand-light font-medium">Email:</span>
+                  <p className="text-white flex items-center">
+                    <Mail className="w-4 h-4 mr-2 text-brand-cta" />
+                    {linkedClient.email}
+                  </p>
+                </div>
+                <div>
+                  <span className="text-brand-light font-medium">Telefone:</span>
+                  <p className="text-white flex items-center">
+                    <Phone className="w-4 h-4 mr-2 text-brand-cta" />
+                    {linkedClient.phone}
+                  </p>
+                </div>
+                <div>
+                  <span className="text-brand-light font-medium">Último Contato:</span>
+                  <p className="text-white">{formatDate(linkedClient.lastContact)}</p>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="bg-brand-secondary p-6 rounded-xl border border-brand-accent/20 mb-8">
+              <h3 className="text-xl font-bold text-white mb-4 flex items-center">
+                <User className="w-6 h-6 text-brand-cta mr-3" />
+                Cliente Relacionado
+              </h3>
+              <p className="text-brand-light text-center py-4">Nenhum cliente vinculado a este imóvel.</p>
+            </div>
+          )}
 
           {/* Informações adicionais */}
           <div className="bg-brand-secondary p-6 rounded-xl border border-brand-accent/20">
